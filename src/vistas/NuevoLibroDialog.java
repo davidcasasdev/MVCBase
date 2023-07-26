@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 
 public class NuevoLibroDialog extends JDialog {
@@ -35,6 +36,7 @@ public class NuevoLibroDialog extends JDialog {
 	private JSpinner spinnerAnio;
 	private JSpinner spinnerPaginas;
 	private JSpinner spinnerCantidad;
+	private JButton okButton;
 
 
 
@@ -137,15 +139,19 @@ public class NuevoLibroDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Insertar");
+				okButton = new JButton("Insertar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Libro l =validarDatos();
 						
 						if (l!=null) {
 							try {
-								controlador.insertaLibro(l);
-							} catch (BBDDException e1) {
+								if (okButton.getText().equals("Insertar")) {
+									controlador.insertaLibro(l);
+								} else {
+									controlador.editarLibro(l);
+								}
+							} catch (BBDDException | CantidadDebeSerPositivaException e1) {
 								JOptionPane.showConfirmDialog(contentPanel, 
 										e1.getMessage(),
 										"Error insertando los datos",JOptionPane.ERROR_MESSAGE);
@@ -205,6 +211,35 @@ public class NuevoLibroDialog extends JDialog {
 
 	public void setControlador(Controlador controlador) {
 		this.controlador=controlador;
+		
+	}
+	
+	public void limpiar( ) {
+		this.setTitle("Insertar Libro");
+		this.okButton.setText("Insertar");
+		this.txtIsbn.setEnabled(true);
+		this.txtIsbn.setText("");
+		this.txtCodEditorial.setText("");
+		this.txtTitulo.setText("");
+		this.txtPrecio.setText("");
+		this.txtPrecioCD.setText("");
+		this.spinnerAnio.setValue(LocalDate.now().getYear());
+		this.spinnerCantidad.setValue(1);
+		this.spinnerPaginas.setValue(200);
+	}
+
+	public void setLibro(Libro l) {
+		this.setTitle("Editar Libro");
+		this.okButton.setText("Editar");
+		this.txtIsbn.setEnabled(false);
+		this.txtIsbn.setText(l.getIsbn());
+		this.txtCodEditorial.setText(""+l.getCodEditorial());
+		this.txtTitulo.setText(l.getTitulo());
+		this.txtPrecio.setText(""+l.getPrecio());
+		this.txtPrecioCD.setText(""+l.getPrecioCD());
+		this.spinnerAnio.setValue(l.getAnio());
+		this.spinnerCantidad.setValue(l.getCantidad());
+		this.spinnerPaginas.setValue(l.getNumPags());
 		
 	}
 

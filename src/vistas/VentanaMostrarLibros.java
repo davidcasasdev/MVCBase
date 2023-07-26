@@ -91,6 +91,17 @@ public class VentanaMostrarLibros extends JFrame {
 		contentPane.add(btnNewButton, "flowx,cell 0 2,alignx center");
 		
 		JButton btnNewButton_1 = new JButton("Editar Libro");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String isbn = getIsbnSeleccionado();
+				try {
+					controlador.mostrarEditarLibro(isbn);
+				} catch (CantidadDebeSerPositivaException | BBDDException e1) {
+					// TODO Bloque catch generado automáticamente
+					e1.printStackTrace();
+				}
+			}
+		});
 		contentPane.add(btnNewButton_1, "cell 1 2,alignx center");
 	}
 

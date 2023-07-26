@@ -54,13 +54,28 @@ public class Controlador {
 
 	public void mostrarInsertarLibro() {
 		this.dNuevoLibro.setModal(true);
+		this.dNuevoLibro.limpiar();
 		this.dNuevoLibro.setVisible(true);
+	}
+	
+	public void mostrarEditarLibro(String isbn) throws CantidadDebeSerPositivaException, BBDDException {
+		Libro l = this.daoLibro.getLibro(isbn);
+		this.dNuevoLibro.setLibro(l);
+		this.dNuevoLibro.setVisible(true);
+		
+		
 	}
 
 	public void insertaLibro(Libro l) throws BBDDException {
 		this.daoLibro.insertarLibro(l);
 		this.dNuevoLibro.setVisible(false);
 		
+	}
+	
+	public void editarLibro(Libro l) throws BBDDException, CantidadDebeSerPositivaException {
+		this.daoLibro.editarLibro(l);
+		this.dNuevoLibro.setVisible(false);
+		mostrarLibros();
 	}
 
 	public void mostrarInsertarEditorial() {
@@ -88,6 +103,9 @@ public class Controlador {
 		this.daoLibro.eliminarLibro(isbn);
 		mostrarLibros();
 	}
+
+	
+
 
 	
 	
