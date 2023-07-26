@@ -34,7 +34,7 @@ public class EditorialesDAO {
 	 * @throws BBDDException se produce error en la base de datos
 	 */
 	public ArrayList<Editorial> getAllEditoriales() 
-			throws CantidadDebeSerPositivaException, BBDDException {
+			throws BBDDException {
 		// instanciamos la lista
 		ArrayList<Editorial> lista = new ArrayList<Editorial>();
 		

@@ -222,7 +222,7 @@ public class NuevoLibroDialog extends JDialog {
 		this.okButton.setText("Insertar");
 		this.txtIsbn.setEnabled(true);
 		this.txtIsbn.setText("");
-		this.comboEditorial.setSelectedIndex(0);
+		if (comboEditorial.getModel().getSize()>0) this.comboEditorial.setSelectedIndex(0);
 		this.txtTitulo.setText("");
 		this.txtPrecio.setText("");
 		this.txtPrecioCD.setText("");

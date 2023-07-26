@@ -74,6 +74,17 @@ public class VentanaPpal extends JFrame {
 		
 		JButton btnMostrarEditorial = new JButton("Mostrar Editorial");
 		btnMostrarEditorial.setFont(new Font("Verdana", Font.PLAIN, 18));
+		btnMostrarEditorial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controlador.mostrarEditoriales();
+				} catch (BBDDException e1) {
+					JOptionPane.showMessageDialog(null, 
+							e1.getMessage(),
+							"Error al recuperar los datos",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		contentPane.add(btnMostrarEditorial, "cell 3 3");
 	}
 

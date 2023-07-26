@@ -10,6 +10,7 @@ import modelo.Editorial;
 import modelo.Libro;
 import vistas.NuevaEditorialDialog;
 import vistas.NuevoLibroDialog;
+import vistas.VentanaMostrarEditoriales;
 import vistas.VentanaMostrarLibros;
 import vistas.VentanaPpal;
 
@@ -17,12 +18,13 @@ public class Controlador {
 	
 	// Lista de Libros
 	private ArrayList<Libro> listaLibros;
-	
+	private ArrayList<Editorial> listaEditoriales;
 	// Referencias a las ventanas de la aplicación
 	private VentanaPpal vPrincipal;
 	private NuevoLibroDialog dNuevoLibro;
 	private NuevaEditorialDialog dNuevaEditorial;
 	private VentanaMostrarLibros vMostrarLibros;
+	private VentanaMostrarEditoriales vMostrarEditoriales;
 	
 	// Definimos los objetos de acceso a datos (DAO)
 	LibrosDAO daoLibro;
@@ -35,12 +37,14 @@ public class Controlador {
 		this.dNuevoLibro = new NuevoLibroDialog();
 		this.dNuevaEditorial = new NuevaEditorialDialog();
 		this.vMostrarLibros = new VentanaMostrarLibros();
+		this.vMostrarEditoriales = new VentanaMostrarEditoriales();
 		
 		// Pasamos una copia del controlador a las vistas.
 		this.vPrincipal.setControlador(this);
 		this.dNuevoLibro.setControlador(this);
 		this.dNuevaEditorial.setControlador(this);
 		this.vMostrarLibros.setControlador(this);
+		this.vMostrarEditoriales.setControlador(this);
 		
 		
 		// Instanciamos el DAO del Libro
@@ -98,6 +102,12 @@ public class Controlador {
 		
 	}
 
+	public void editarEditorial(Editorial ed) throws BBDDException {
+		this.daoEditoriales.editarEditorial(ed);
+		this.dNuevaEditorial.setVisible(false);
+		mostrarEditoriales();
+	}
+	
 	public void mostrarLibros() throws CantidadDebeSerPositivaException, BBDDException {
 		
 		// incvocamos al doa de libros para recoger la lista de libros de la tabla
@@ -111,8 +121,30 @@ public class Controlador {
 		this.daoLibro.eliminarLibro(isbn);
 		mostrarLibros();
 	}
-
 	
+	public void mostrarEditoriales() throws BBDDException {
+		
+		// incvocamos al doa de libros para recoger la lista de libros de la tabla
+		this.listaEditoriales = daoEditoriales.getAllEditoriales();
+		this.vMostrarEditoriales.setListaEditoriales(this.listaEditoriales);
+		this.vMostrarEditoriales.setVisible(true);
+		
+	}
+
+	public void eliminarEditorial(int codEditorial) throws BBDDException {
+		this.daoEditoriales.eliminarEditorial(codEditorial);
+		mostrarEditoriales();
+	}
+	
+	
+	public void mostrarEditarEditorial(int codEditorial) throws BBDDException {
+		Editorial ed = this.daoEditoriales.getEditorial(codEditorial);
+		
+		this.dNuevaEditorial.setEditorial(ed);
+		this.dNuevaEditorial.setVisible(true);
+		
+		
+	}
 
 
 	
