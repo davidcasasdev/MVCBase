@@ -3,10 +3,13 @@ package vistas;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Controlador;
+import excepciones.BBDDException;
+import excepciones.CantidadDebeSerPositivaException;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -41,6 +44,17 @@ public class VentanaPpal extends JFrame {
 		contentPane.add(btnNuevoLibro, "cell 1 1,growx");
 		
 		JButton btnMostrarLibros = new JButton("Mostrar Libros");
+		btnMostrarLibros.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controlador.mostrarLibros();
+				} catch (CantidadDebeSerPositivaException | BBDDException e1) {
+					JOptionPane.showMessageDialog(null, 
+							e1.getMessage(),
+							"Error al recuperar los datos",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnMostrarLibros.setFont(new Font("Verdana", Font.PLAIN, 18));
 		contentPane.add(btnMostrarLibros, "cell 3 1,growx");
 		

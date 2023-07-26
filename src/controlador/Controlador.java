@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import dao.EditorialesDAO;
 import dao.LibrosDAO;
 import excepciones.BBDDException;
+import excepciones.CantidadDebeSerPositivaException;
 import modelo.Editorial;
 import modelo.Libro;
 import vistas.NuevaEditorialDialog;
 import vistas.NuevoLibroDialog;
+import vistas.VentanaMostrarLibros;
 import vistas.VentanaPpal;
 
 public class Controlador {
@@ -20,6 +22,7 @@ public class Controlador {
 	private VentanaPpal vPrincipal;
 	private NuevoLibroDialog dNuevoLibro;
 	private NuevaEditorialDialog dNuevaEditorial;
+	private VentanaMostrarLibros vMostrarLibros;
 	
 	// Definimos los objetos de acceso a datos (DAO)
 	LibrosDAO daoLibro;
@@ -31,11 +34,14 @@ public class Controlador {
 		this.vPrincipal = new VentanaPpal();
 		this.dNuevoLibro = new NuevoLibroDialog();
 		this.dNuevaEditorial = new NuevaEditorialDialog();
+		this.vMostrarLibros = new VentanaMostrarLibros();
 		
 		// Pasamos una copia del controlador a las vistas.
 		this.vPrincipal.setControlador(this);
 		this.dNuevoLibro.setControlador(this);
 		this.dNuevaEditorial.setControlador(this);
+		this.vMostrarLibros.setControlador(this);
+		
 		
 		// Instanciamos el DAO del Libro
 		this.daoLibro = new LibrosDAO();
@@ -67,6 +73,20 @@ public class Controlador {
 		this.daoEditoriales.insertarEditorial(ed);
 		this.dNuevaEditorial.setVisible(false);
 		
+	}
+
+	public void mostrarLibros() throws CantidadDebeSerPositivaException, BBDDException {
+		
+		// incvocamos al doa de libros para recoger la lista de libros de la tabla
+		this.listaLibros = daoLibro.getAllLibros();
+		this.vMostrarLibros.setListaLibros(this.listaLibros);
+		this.vMostrarLibros.setVisible(true);
+		
+	}
+
+	public void eliminarLibro(String isbn) throws BBDDException, CantidadDebeSerPositivaException {
+		this.daoLibro.eliminarLibro(isbn);
+		mostrarLibros();
 	}
 
 	
