@@ -52,14 +52,22 @@ public class Controlador {
 		this.vPrincipal.setVisible(true);
 	}
 
-	public void mostrarInsertarLibro() {
+	public void mostrarInsertarLibro() throws CantidadDebeSerPositivaException, BBDDException {
 		this.dNuevoLibro.setModal(true);
 		this.dNuevoLibro.limpiar();
+		
+		ArrayList<Editorial> listaEditoriales = this.daoEditoriales.getAllEditoriales();
+		this.dNuevoLibro.setListaEditoriales(listaEditoriales);
+		
 		this.dNuevoLibro.setVisible(true);
 	}
 	
 	public void mostrarEditarLibro(String isbn) throws CantidadDebeSerPositivaException, BBDDException {
 		Libro l = this.daoLibro.getLibro(isbn);
+		
+		ArrayList<Editorial> listaEditoriales = this.daoEditoriales.getAllEditoriales();
+		this.dNuevoLibro.setListaEditoriales(listaEditoriales);
+		
 		this.dNuevoLibro.setLibro(l);
 		this.dNuevoLibro.setVisible(true);
 		

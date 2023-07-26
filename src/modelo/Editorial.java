@@ -32,12 +32,16 @@ public class Editorial {
 	}
 
 
+	public Editorial() {
+	}
+
+
 	public Integer getCodEditorial() {
 		return codEditorial;
 	}
 
 
-	protected void setCodEditorial(Integer codEditorial) {
+	public void setCodEditorial(Integer codEditorial) {
 		this.codEditorial = codEditorial;
 	}
 
@@ -64,7 +68,7 @@ public class Editorial {
 
 	@Override
 	public String toString() {
-		return "codEditorial: " + codEditorial + "\nnombre: " + nombre + "\nanio: " + anio;
+		return  codEditorial+ " - "+ nombre ;
 	}
 
 

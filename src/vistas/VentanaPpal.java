@@ -37,7 +37,12 @@ public class VentanaPpal extends JFrame {
 		JButton btnNuevoLibro = new JButton("Nuevo Libro");
 		btnNuevoLibro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.mostrarInsertarLibro();
+				try {
+					controlador.mostrarInsertarLibro();
+				} catch (CantidadDebeSerPositivaException | BBDDException e1) {
+					// TODO Bloque catch generado automáticamente
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNuevoLibro.setFont(new Font("Verdana", Font.PLAIN, 18));

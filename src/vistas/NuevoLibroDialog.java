@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import controlador.Controlador;
 import excepciones.BBDDException;
 import excepciones.CantidadDebeSerPositivaException;
+import modelo.Editorial;
 import modelo.Libro;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -22,14 +23,16 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class NuevoLibroDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtIsbn;
 	private JTextField txtTitulo;
-	private JTextField txtCodEditorial;
+	private JComboBox comboEditorial;
 	private JTextField txtPrecio;
 	private JTextField txtPrecioCD;
 	private Controlador controlador;
@@ -80,9 +83,8 @@ public class NuevoLibroDialog extends JDialog {
 			contentPanel.add(lblNewLabel_1, "cell 1 5,alignx trailing");
 		}
 		{
-			txtCodEditorial = new JTextField();
-			contentPanel.add(txtCodEditorial, "cell 2 5 2 1,growx");
-			txtCodEditorial.setColumns(10);
+			comboEditorial = new JComboBox();
+			contentPanel.add(comboEditorial, "cell 2 5 5 1,growx");
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Año:");
@@ -182,7 +184,8 @@ public class NuevoLibroDialog extends JDialog {
 		try {
 			String isbn = txtIsbn.getText();
 			String titulo = txtTitulo.getText();
-			int codEditorial = Integer.parseInt(txtCodEditorial.getText());
+			Editorial ed = (Editorial) comboEditorial.getSelectedItem();
+			int codEditorial = ed.getCodEditorial();
 			int anio = (int) spinnerAnio.getValue();
 			int numPags = (int) spinnerPaginas.getValue();
 			double precio = Double.parseDouble(txtPrecio.getText());
@@ -219,7 +222,7 @@ public class NuevoLibroDialog extends JDialog {
 		this.okButton.setText("Insertar");
 		this.txtIsbn.setEnabled(true);
 		this.txtIsbn.setText("");
-		this.txtCodEditorial.setText("");
+		this.comboEditorial.setSelectedIndex(0);
 		this.txtTitulo.setText("");
 		this.txtPrecio.setText("");
 		this.txtPrecioCD.setText("");
@@ -233,13 +236,25 @@ public class NuevoLibroDialog extends JDialog {
 		this.okButton.setText("Editar");
 		this.txtIsbn.setEnabled(false);
 		this.txtIsbn.setText(l.getIsbn());
-		this.txtCodEditorial.setText(""+l.getCodEditorial());
+		
+		Editorial ed = new Editorial();
+		ed.setCodEditorial(l.getCodEditorial());
+		this.comboEditorial.setSelectedItem(ed);
+		
+		//this.comboEditorial.setText(""+l.getCodEditorial());
 		this.txtTitulo.setText(l.getTitulo());
 		this.txtPrecio.setText(""+l.getPrecio());
 		this.txtPrecioCD.setText(""+l.getPrecioCD());
 		this.spinnerAnio.setValue(l.getAnio());
 		this.spinnerCantidad.setValue(l.getCantidad());
 		this.spinnerPaginas.setValue(l.getNumPags());
+		
+	}
+
+	public void setListaEditoriales(ArrayList<Editorial> listaEditoriales) {
+		for (Editorial ed : listaEditoriales) {
+			comboEditorial.addItem(ed);
+		}
 		
 	}
 
