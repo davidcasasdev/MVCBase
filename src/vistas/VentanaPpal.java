@@ -18,23 +18,7 @@ public class VentanaPpal extends JFrame {
 	private JPanel contentPane;
 	private Controlador controlador;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPpal frame = new VentanaPpal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
+		/**
 	 * Create the frame.
 	 */
 	public VentanaPpal() {
@@ -45,7 +29,7 @@ public class VentanaPpal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][]", "[][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][]", "[][][][]"));
 		
 		JButton btnNuevoLibro = new JButton("Nuevo Libro");
 		btnNuevoLibro.addActionListener(new ActionListener() {
@@ -54,11 +38,24 @@ public class VentanaPpal extends JFrame {
 			}
 		});
 		btnNuevoLibro.setFont(new Font("Verdana", Font.PLAIN, 18));
-		contentPane.add(btnNuevoLibro, "cell 1 1");
+		contentPane.add(btnNuevoLibro, "cell 1 1,growx");
 		
 		JButton btnMostrarLibros = new JButton("Mostrar Libros");
 		btnMostrarLibros.setFont(new Font("Verdana", Font.PLAIN, 18));
-		contentPane.add(btnMostrarLibros, "cell 3 1");
+		contentPane.add(btnMostrarLibros, "cell 3 1,growx");
+		
+		JButton btnNuevaEditorial = new JButton("Nueva Editorial");
+		btnNuevaEditorial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.mostrarInsertarEditorial();
+			}
+		});
+		btnNuevaEditorial.setFont(new Font("Verdana", Font.PLAIN, 18));
+		contentPane.add(btnNuevaEditorial, "cell 1 3");
+		
+		JButton btnMostrarEditorial = new JButton("Mostrar Editorial");
+		btnMostrarEditorial.setFont(new Font("Verdana", Font.PLAIN, 18));
+		contentPane.add(btnMostrarEditorial, "cell 3 3");
 	}
 
 	public void setControlador(Controlador controlador) {
