@@ -94,6 +94,7 @@ public class VentanaMostrarLibros extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String isbn = getIsbnSeleccionado();
+				if(isbn ==null ) return;
 				try {
 					controlador.mostrarEditarLibro(isbn);
 				} catch (CantidadDebeSerPositivaException | BBDDException e1) {

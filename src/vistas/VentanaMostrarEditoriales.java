@@ -86,6 +86,7 @@ public class VentanaMostrarEditoriales extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Integer codEditorial = getEditorialSeleccionada();
+				if(codEditorial ==null ) return;
 				try {
 					controlador.mostrarEditarEditorial(codEditorial);
 				} catch (BBDDException e1) {

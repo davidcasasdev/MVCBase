@@ -92,6 +92,7 @@ public class Controlador {
 
 	public void mostrarInsertarEditorial() {
 		this.dNuevaEditorial.setModal(true);
+		this.dNuevaEditorial.limpiar();
 		this.dNuevaEditorial.setVisible(true);
 		
 	}
